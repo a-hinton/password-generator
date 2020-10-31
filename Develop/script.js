@@ -9,6 +9,7 @@ var upperCharInclude;
 var numsInclude;
 var symbolsInclude;
 var password;
+var selectionFuncArray = [{lower: selectLower()}]
 
 // Selector functions to choose random characters of each type
 
@@ -30,11 +31,30 @@ function selectSymbol() {
 
 // Generator function
 function generatePassword() {
-  for (i=0; i <= passwordLength.length; i++)
-  selectLower();
-  if (upperCharInclude==="true"){
-
+  var generatedPassword = "";
+  var typesChecked = 1 // lowercase charcters are the default character type
+  if (upperCharInclude===true){
+    selectionFuncArray.push({upper: selectUpper()});
+    typesChecked ++
   };
+  if (numsInclude===true) {
+    selectionFuncArray.push({num: selectNum()});
+    typesChecked ++
+  };
+  if (symbolsInclude===true) {
+    selectionFuncArray.push({symbol: selectSymbol()});
+    typesChecked ++ 
+  };
+  for (i=0; i < passwordLength.length; i+= typesChecked){
+    selectionFuncArray.forEach(type => {
+      var funcArrName = Object.keys(type)[0];
+      generatedPassword += selectionFuncArray[funcArrName]();
+    }
+    );
+  }
+  console.log(generatedPassword);
+  var completePassword = generatedPassword.slice(0, passwordLength);
+  return completePassword
 }
 
 // Write password to the #password input
@@ -49,10 +69,10 @@ function writePassword() {
   numsInclude = confirm("Click 'OK' if you want to include numbers in your password.");
   symbolsInclude = confirm("Click 'OK' is you want to include symbols in your password.");
   
-  password = generatePassword();
+  // password = generatePassword();
   var passwordText = document.querySelector("#password");
 
-  passwordText.value = password;
+  passwordText.textContent = generatePassword();
 }
 
 // Add event listener to generate button
@@ -64,4 +84,4 @@ generateBtn.addEventListener("click", writePassword);
 // console.log(selectUpper());
 // console.log(selectNum());
 // console.log(selectSymbol());
-// console.log(writePassword());
+// console.log(generatePassword());
