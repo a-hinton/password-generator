@@ -33,29 +33,21 @@ function selectSymbol() {
 // Generator function
 function generatePassword(lowerCharInclude, upperCharInclude, numsInclude, symbolsInclude, passwordLength) {
   var generatedPassword = "";
-  typesChecked = 0;
-  // console.log(generatedPassword)
+
+  // loop through logic to include random characters from each selected character type
   console.log(passwordLength)
   for (let i=0; i < passwordLength; i++){
     if (lowerCharInclude === true){
       generatedPassword += selectLower();
-      typesChecked ++
-      console.log("1 ", generatedPassword);
     };
     if (upperCharInclude === true){
       generatedPassword += selectUpper();
-      typesChecked ++
-      console.log("2 ", generatedPassword);
     };
     if (numsInclude === true) {
       generatedPassword += selectNum();
-      typesChecked ++
-      console.log("3 ",generatedPassword);
     };
     if (symbolsInclude === true) {
       generatedPassword += selectSymbol();
-      typesChecked ++
-      console.log("4 ", generatedPassword);
     };
   }
   var completePassword = generatedPassword.slice(0, passwordLength);
@@ -88,11 +80,3 @@ function writePassword() {
 
 // Add event listener to generate button
 generateBtn.addEventListener("click", writePassword);
-
-
-// Test code
-// console.log(selectLower());
-// console.log(selectUpper());
-// console.log(selectNum());
-// console.log(selectSymbol());
-// console.log(generatePassword());
