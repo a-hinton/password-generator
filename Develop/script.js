@@ -5,11 +5,12 @@ var upperChar = ["A","B","C","D","E","F","G","H","I","J","K","L","M","N","O","P"
 var nums = ["0","1","2","3","4","5","6","7","8","9"];
 var symbols = ["!","@","#","$","%","^","&","*","(",")","-","_","=","+"];
 var passwordLength = "";
+var lowerCharInclude;
 var upperCharInclude;
 var numsInclude;
 var symbolsInclude;
 var password;
-var selectionFuncArray = [{lower: selectLower()}]
+var selectionFuncArray = [selectLower()]
 
 // Selector functions to choose random characters of each type
 
@@ -30,29 +31,33 @@ function selectSymbol() {
 }
 
 // Generator function
-function generatePassword() {
+function generatePassword(lowerCharInclude, upperCharInclude, numsInclude, symbolsInclude, passwordLength) {
   var generatedPassword = "";
-  var typesChecked = 1 // lowercase charcters are the default character type
-  if (upperCharInclude===true){
-    selectionFuncArray.push({upper: selectUpper()});
-    typesChecked ++
-  };
-  if (numsInclude===true) {
-    selectionFuncArray.push({num: selectNum()});
-    typesChecked ++
-  };
-  if (symbolsInclude===true) {
-    selectionFuncArray.push({symbol: selectSymbol()});
-    typesChecked ++ 
-  };
-  for (i=0; i < passwordLength.length; i+= typesChecked){
-    selectionFuncArray.forEach(type => {
-      var funcArrName = Object.keys(type)[0];
-      generatedPassword += selectionFuncArray[funcArrName]();
-    }
-    );
+  typesChecked = 0;
+  // console.log(generatedPassword)
+  console.log(passwordLength)
+  for (let i=0; i < passwordLength; i++){
+    if (lowerCharInclude === true){
+      generatedPassword += selectLower();
+      typesChecked ++
+      console.log("1 ", generatedPassword);
+    };
+    if (upperCharInclude === true){
+      generatedPassword += selectUpper();
+      typesChecked ++
+      console.log("2 ", generatedPassword);
+    };
+    if (numsInclude === true) {
+      generatedPassword += selectNum();
+      typesChecked ++
+      console.log("3 ",generatedPassword);
+    };
+    if (symbolsInclude === true) {
+      generatedPassword += selectSymbol();
+      typesChecked ++
+      console.log("4 ", generatedPassword);
+    };
   }
-  console.log(generatedPassword);
   var completePassword = generatedPassword.slice(0, passwordLength);
   return completePassword
 }
@@ -65,14 +70,20 @@ function writePassword() {
     writePassword();
   }
 
+  lowerCharInclude = confirm("Click 'OK' if you want to include lowercase characters in your password.");
   upperCharInclude = confirm("Click 'OK' if you want to include uppercase characters in your password.");
   numsInclude = confirm("Click 'OK' if you want to include numbers in your password.");
-  symbolsInclude = confirm("Click 'OK' is you want to include symbols in your password.");
+  symbolsInclude = confirm("Click 'OK' if you want to include symbols in your password.");
   
+  if (lowerCharInclude===false && upperCharInclude===false && numsInclude===false && symbolsInclude===false){
+    alert("Please choose at least one character type to include in your password.");
+    writePassword();
+  }
+
   // password = generatePassword();
   var passwordText = document.querySelector("#password");
-
-  passwordText.textContent = generatePassword();
+  var password = generatePassword(lowerCharInclude, upperCharInclude, numsInclude, symbolsInclude, passwordLength);
+  passwordText.textContent = password;
 }
 
 // Add event listener to generate button
