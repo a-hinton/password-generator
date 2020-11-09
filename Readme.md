@@ -17,3 +17,6 @@ To define the parameters of my password, there are multiple prompts. The input v
 In the future, I would like to randomize the order in which the characters are added to the password.
 
 # Screencaps
+
+![prompt-example](.Assets/images/prompt-example.png)
+![password-example](.Assets/images/prompt-example.png)
