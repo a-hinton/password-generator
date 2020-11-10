@@ -18,5 +18,5 @@ In the future, I would like to randomize the order in which the characters are a
 
 # Screencaps
 
-![prompt-example](.Assets/images/prompt-example.png)
-![password-example](.Assets/images/prompt-example.png)
+![prompt-example](./Assets/images/prompt-example.png)
+![password-example](./Assets/images/password-example.png)
